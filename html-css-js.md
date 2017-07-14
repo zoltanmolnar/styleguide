@@ -880,3 +880,542 @@ The ability to nest media queries in Sass means:
 [More info](http://css-tricks.com/naming-media-queries/)
 
 * * *
+
+
+### JavaScript Language Rules
+
+#### var
+
+Declarations with var: always.
+
+Use **one var declaration for multiple variables** and declare each variable on a newline.  
+
+```javascript
+// bad
+var items = getItems();
+var goSportsTeam = true;
+var dragonball = 'z';
+
+// good
+var items = getItems(),
+	goSportsTeam = true,
+	dragonball = 'z';
+```
+
+Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.  
+
+```javascript
+// bad
+function() {
+	test();
+	console.log('doing stuff..');
+
+	//..other stuff..
+
+	var name = getName();
+
+	if (name === 'test') {
+		return false;
+	}
+
+	return name;
+}
+
+// good
+function() {
+	var name = getName();
+
+	test();
+	console.log('doing stuff..');
+
+	//..other stuff..
+
+	if (name === 'test') {
+		return false;
+	}
+
+	return name;
+}
+```
+
+But! Make sure you do not impose any performance implications on the code itself
+
+```javascript
+// bad
+function() {
+	var name = getName(); // in a function call with no arguments, this call is unneccessary
+
+	if (!arguments.length) {
+		return false;
+	}
+
+	return name;
+}
+
+// good
+function() {
+	if (!arguments.length) {
+		return false;
+	}
+
+	var name = getName();
+
+	return name;
+}
+
+// or even
+function() {
+	var name;
+
+	if (!arguments.length) {
+		return false;
+	}
+
+	name = getName();
+
+	return name;
+}
+```
+
+#### Conditional Expressions & Equality
+
+Use `===` and `!==` over `==` and `!=`.  
+
+Conditional expressions are evaluated using coercion with the `ToBoolean` method and always follow these simple rules:  
+
++ **Objects** evaluate to **true**  
++ **Undefined** evaluates to **false**  
++ **Null** evaluates to **false**  
++ **Booleans** evaluate to **the value of the boolean**  
++ **Numbers** evalute to **false** if **+0, -0, or NaN**, otherwise **true**  
++ **Strings** evaluate to **false** if an empty string `''`, otherwise **true**  
+
+#### Commas
+
+Leading commas: **Nope.**  
+
+```javascript
+// bad
+var once
+  , upon
+  , aTime;
+
+// good
+var once,
+	upon,
+	aTime;
+
+// bad
+var hero = {
+	firstName: 'Bob'
+  , lastName: 'Parr'
+  , heroName: 'Mr. Incredible'
+  , superPower: 'strength'
+};
+
+// good
+var hero = {
+	firstName: 'Bob',
+	lastName: 'Parr',
+	heroName: 'Mr. Incredible',
+	superPower: 'strength'
+};
+```
+
+#### Type Casting & Coercion
+
+Perform type coercion at the beginning of the statement.  
+
+Use `parseInt` for Numbers and always with a radix for type casting.  
+
+If for whatever reason you are doing something wild and `parseInt` is your bottleneck and need to use Bitshift for [performance reasons](http://jsperf.com/coercion-vs-casting/3), leave a comment explaining why and what you're doing.  
+
+#### Naming Conventions
+
+Avoid single letter names. Be descriptive with your naming.  
+
+Use camelCase when naming objects, functions, and instances.  
+
+#### Constants
+
+Use NAMES_LIKE_THIS for constant values.  
+
+Use @const to indicate a constant (non-overwritable) pointer (a variable or property).  
+
+Never use the const keyword as it not supported in Internet Explorer.  
+
+#### Semicolons
+
+Always use semicolons.  
+
+#### Nested functions
+
+Yes  
+
+#### Function Declarations Within Blocks
+
+No
+
+**Do not do this**  
+
+```javascript
+if (x) {
+	function foo() {}
+}
+```
+
+**Recommended**  
+
+```javascript
+if (x) {
+	var foo = function() {}
+}
+```
+
+#### Exceptions
+
+Yes.
+
+#### Custom exceptions
+
+Yes.
+
+#### Standards features
+
+Always preferred over non-standards features  
+
+For maximum portability and compatibility, always prefer standards features over non-standards features (e.g., string.charAt(3) over string[3] and element access with DOM functions instead of using an application-specific shorthand).  
+
+#### Wrapper objects for primitive types
+
+No.
+
+#### Multi-level prototype hierarchies
+
+Not preferred.  
+
+#### delete
+
+Prefer this.foo = null.  
+
+**Do not do this**  
+
+```javascript
+Foo.prototype.dispose = function() {
+	delete this.property_;
+};
+```
+
+**Recommended**  
+
+```javascript
+Foo.prototype.dispose = function() {
+	this.property_ = null;
+};
+````
+
+In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj).  
+
+#### Closures
+
+Yes, but be careful.  
+
+#### eval()
+
+Only for deserialization (e.g. evaluating RPC responses).  
+
+#### with() {}
+
+No.
+
+#### this
+
+Only in object constructors, methods, and in setting up closures.  
+
+#### for-in loop
+
+Only for iterating over keys in an object/map/hash.  
+
+#### Associative Arrays
+
+Never use Array as a map/hash/associative array.  
+
+#### Multiline string literals
+
+No.
+
+**Do not do this**  
+
+```javascript
+var myString = 	'A rather long string of English text, an error message \
+				actually that just keeps going and going -- an error \
+				message to make the Energizer bunny blush (right through \
+				those Schwarzenegger shades)! Where was I? Oh yes, \
+				you\'ve got an error and all the extraneous whitespace is \
+				just gravy.  Have a nice day.';
+```
+
+**Recommended**  
+
+```javascript
+var myString = 	'A rather long string of English text, an error message ' +
+				'actually that just keeps going and going -- an error ' +
+				'message to make the Energizer bunny blush (right through ' +
+				'those Schwarzenegger shades)! Where was I? Oh yes, ' +
+				'you\'ve got an error and all the extraneous whitespace is ' +
+				'just gravy.  Have a nice day.';
+````
+
+#### Array and Object literals
+
+Yes.  
+
+#### Modifying prototypes of builtin objects
+
+No.  
+
+#### Internet Explorer's Conditional Comments
+
+No.  
+
+#### 
+
+* * *
+
+### JavaScript Style Rules
+
+#### Naming
+
+In general, use functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis, EnumNamesLikeThis, methodNamesLikeThis, CONSTANT_VALUES_LIKE_THIS, foo.namespaceNamesLikeThis.bar, and filenameslikethis.js.  
+
+Use full caps namespace names, eg. MYNAMESPACE.
+
+#### Custom toString() methods
+
+Must always succeed without side effects.  
+
+#### Deferred initialization
+
+Ok.
+
+It isn't always possible to initialize variables at the point of declaration, so deferred initialization is fine.  
+
+#### Explicit scope
+
+Always.  
+
+* * *
+
+### Code formatting
+
+#### Line Length
+
+Each line of text in your code should be at most 80 characters long.  
+
+#### Non-ASCII Characters
+
+Non-ASCII characters should be rare, and must use UTF-8 formatting.  
+
+#### Spaces vs. Tabs
+
+Use tabs.
+
+#### Function Declarations and Definitions
+
+Parameters on the same line if they fit.  
+
+#### Function Calls
+
+On one line if it fits; otherwise, wrap arguments at the parenthesis.  
+
+If the arguments do not all fit on one line, they should be broken up onto multiple lines, with each subsequent line aligned with the first argument. Do not add spaces after the open paren or before the close paren.  
+
+If the function has many arguments, consider having one per line if this makes the code more readable.  
+
+#### Conditionals
+
+Prefer no spaces inside parentheses. The else keyword belongs on a new line.  
+
+```javascript
+if (condition) {  // no spaces inside parentheses
+	...
+} else if (...) {  // The else goes on the same line as the closing brace.
+	...
+} else {
+	...
+}
+```
+
+If must always always have an accompanying brace.
+
+#### Loops and Switch Statements
+
+Switch statements should use braces for blocks.  
+
+Annotate non-trivial fall-through between cases.
+
+Empty loop bodies should use {} or continue, but not a single semicolon.  
+
+#### Curly Braces
+
+Because of implicit semicolon insertion, always start your curly braces on the same line as whatever they're opening. For example:
+
+```javascript
+if (something) {
+	// ...
+} else {
+	// ...
+}
+```
+
+#### Blank lines
+
+Use newlines to group logically related pieces of code. For example:  
+
+```javascript
+doSomethingTo(x);
+doSomethingElseTo(x);
+andThen(x);
+
+nowDoSomethingWith(y);
+
+andNowWith(z);
+```
+
+#### Binary and Ternary Operators
+
+Always put the operator on the preceding line. Otherwise, line breaks and indentation follow the same rules as in other Google style guides.  
+
+This operator placement was initially agreed upon out of concerns about automatic semicolon insertion. In fact, semicolon insertion cannot happen before a binary operator, but new code should stick to this style for consistency.  
+
+```javascript
+var x = a ? b : c;  // All on one line if it will fit.
+
+// Indentation +4 is OK.
+var y = a ?
+	longButSimpleOperandB : longButSimpleOperandC;
+
+// Indenting to the line position of the first operand is also OK.
+var z = a ?
+		moreComplicatedB :
+		moreComplicatedC;
+```
+
+This includes the dot operator.  
+
+```javascript
+var x = a . b() . c();  // All on one line if it will fit.
+
+// Indentation +4 is OK.
+var y = foo .
+	stuff() . moreStuff();
+
+// Indenting to the line position of the first operand is also OK.
+var x = foo.bar().
+	doSomething().
+	doSomethingElse();
+```
+
+#### Parentheses
+
+Only where required.
+
+Use sparingly and in general only where required by the syntax and semantics.  
+
+**Never use parentheses for unary operators such as delete, typeof and void or after keywords such as return,** throw as well as others (case, in or new).  
+
+#### Strings
+
+Prefer ' over ".
+
+For consistency single-quotes (') are preferred to double-quotes ("). This is helpful when creating strings that include HTML.  
+
+#### Compiling
+
+Required.
+
+Use of JS compilers such as the Closure Compiler is required for all customer-facing code.  
+
+#### Tips and Tricks
+
+##### True and False Boolean Expressions
+
+The following are all false in boolean expressions:  
+
++  null
++  undefined
++  '' the empty string
++  0 the number
+
+But be careful, because these are all true:
+
++  '0' the string
++  [] the empty array
++  {} the empty object
+
+##### Conditional (Ternary) Operator (?:)
+
+**Instead of this:**
+
+```javascript
+if (val != 0) {
+	return foo();
+} else {
+	return bar();
+}
+```
+
+you can write this:  
+
+```javascript
+return val ? foo() : bar();
+```
+
+The ternary conditional is also useful when generating HTML:
+
+```javascript
+var html = '<input type="checkbox"' +
+    (isChecked ? ' checked' : '') +
+    (isEnabled ? '' : ' disabled') +
+    ' name="foo">';
+```
+
+##### && and ||
+
+These binary boolean operators are short-circuited, and evaluate to the last evaluated term. 
+
+##### Properties
+
+Use dot notation when accessing properties.  
+
+```javascript
+var luke = {
+	jedi: true,
+	age: 28
+};
+
+// bad
+var isJedi = luke['jedi'];
+
+// good
+var isJedi = luke.jedi;
+```
+
+Use subscript notation `[]` when accessing properties with a variable.  
+
+```javascript
+var luke = {
+	jedi: true,
+	age: 28
+};
+
+function getProp(prop) {
+	return luke[prop];
+}
+
+var isJedi = getProp('jedi');
+```
+ 
+
+* * *
+
