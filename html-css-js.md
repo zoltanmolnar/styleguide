@@ -1425,9 +1425,12 @@ var isJedi = getProp('jedi');
 * * *
 
 
-EXTERNAL LINKS
+USEFUL LINKS
+
 http://codeguide.co/
+
 https://css-tricks.com/css-style-guides/
+
 https://google.github.io/styleguide/htmlcssguide.html
 
 
