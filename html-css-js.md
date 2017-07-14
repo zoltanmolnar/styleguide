@@ -120,6 +120,11 @@ Use proper HTML5 elements, but don't overuse it! (like using article, section fo
 
 Don't make the code too complex only because of semantics (eg. using 3-4 elements for image captioning, instead of simple solutions)
 
+Donâ€™t omit optional closing tags
+
+Don't include a trailing slash in self-closing elementsâ€”the HTML5 spec says they're optional
+
+Always add language attribute to the html tag
 * * *
 
 #### Multimedia Fallback  
@@ -151,7 +156,7 @@ Use entity references.
 **Not recommended**  
 
 ```html
-The currency symbol for the Euro is "€".
+The currency symbol for the Euro is "â‚¬".
 ```
 
 **Recommended**  
@@ -168,7 +173,7 @@ Omit optional tags (optional).
 
 For file size optimization and scannability purposes, consider omitting optional tags. The HTML5 specification defines what tags can be omitted.  
 
-(This approach may require a grace period to be established as a wider guideline as it’s significantly different from what web developers are typically taught. For consistency and simplicity reasons it’s best served omitting all optional tags, not just a selection.)  
+(This approach may require a grace period to be established as a wider guideline as itâ€™s significantly different from what web developers are typically taught. For consistency and simplicity reasons itâ€™s best served omitting all optional tags, not just a selection.)  
 
 Do not close self closing tags (`<br>`) 
 
@@ -206,7 +211,7 @@ Use a new line for every block, list, or table element, and indent every such ch
 
 Indent them if they are child elements of a block, list, or table element.  
 
-**If you run into issues around whitespace between list items it’s acceptable to put all li elements in one line. A linter is encouraged to throw a warning instead of an error.**  
+**If you run into issues around whitespace between list items itâ€™s acceptable to put all li elements in one line. A linter is encouraged to throw a warning instead of an error.**  
 
 Using `<li>` elements (as stated above) in one line is okay for me (the safest mode to get rid of the whitespace issue)  
 
@@ -653,7 +658,7 @@ Use single quotation marks for attribute selectors and property values.
 
 Use single ('') rather than double ("") quotation marks for attribute selectors or property values. **Do not use quotation marks in URI values (url()).**  
 
-Exception: If you do need to use the @charset rule, use double quotation marks—single quotation marks are not permitted.  
+Exception: If you do need to use the @charset rule, use double quotation marksâ€”single quotation marks are not permitted.  
 
 **Not recommended**  
   
@@ -1418,4 +1423,15 @@ var isJedi = getProp('jedi');
  
 
 * * *
+
+
+EXTERNAL LINKS
+http://codeguide.co/
+https://css-tricks.com/css-style-guides/
+https://google.github.io/styleguide/htmlcssguide.html
+
+
+
+
+
 
