@@ -185,17 +185,17 @@ Specifying type attributes in these contexts is not necessary as HTML5 implies t
 **Not recommended**  
 
 ```html
-<link rel="stylesheet" href="//www.carnationgroup.com/css/bazingaaa.css" type="text/css">
-<script src="//www.carnationgroup.com/js/ie6-simulator-game.js" type="text/javascript"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<script src="//code.jquery.com/jquery-3.2.1.js" type="text/javascript"></script>
 ```
 
 **Recommended**  
 
 ```html
-<link rel="stylesheet" href="//www.carnationgroup.com/css/bazingaaa.css">
-<script src="//www.carnationgroup.com/js/ie6-simulator-game.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="//code.jquery.com/jquery-3.2.1.js"></script>
 ```
-
+ 
 * * *  
 
 ### HTML Formatting Rules
